@@ -129,8 +129,13 @@ sob a licença acima especificada.
         rotationVector = [0.0,0.0,0.0],
         //Define o vetor para rotação da cabeça
         headRotationVector = [15.0,10.0,5.0],
+        //Define o vetor para rotação do quadril
         hipRotationVector =  [-15.0,10.0,0.0],
-        legRotationVector = [-15.0,10.0,5.0],
+        //Define os vetores para rotação das pernas
+        firstLegRotationVector = [15.0,10.0,5.0],
+        secondLegRotationVector = [15.0,10.0,5.0],
+        thirdLegRotationVector = [15.0,10.0,5.0],
+        fourthLegRotationVector = [15.0,10.0,5.0],
         //Criar a matriz de camera e modelagem 4x4
         modelViewMatrix,
         //Cria a matriz de projeção 4x4
@@ -279,7 +284,7 @@ sob a licença acima especificada.
       myMatrixStack = new MyStack();
     
       cube = new MyCube(program,gl,undefined);
-      mouse = new Mouse(program,gl,hipRotationVector,headRotationVector,legRotationVector);
+      mouse = new Mouse(program,gl,hipRotationVector,headRotationVector,firstLegRotationVector,secondLegRotationVector,thirdLegRotationVector,fourthLegRotationVector);
 
       //
       var tv = vec3.create();
@@ -436,17 +441,71 @@ sob a licença acima especificada.
           return result;
         }, {}),
 
-        ...['Rotate Leg X', 'Rotate Leg Y', 'Rotate Leg Z'].reduce((result, name, i) => {
+        ...['Rotate First Leg X', 'Rotate First Leg Y', 'Rotate First Leg Z'].reduce((result, name, i) => {
           result[name] = {
-            value: legRotationVector[i],
+            value: firstLegRotationVector[i],
             min: -45, max: 45, step: 0.000001,
             onChange(v, state) {
-              LegRotationVector = [
-                state['Rotate Leg X'],
-                state['Rotate Leg Y'],
-                state['Rotate Leg Z']
+              firstLegRotationVector = [
+                state['Rotate First Leg X'],
+                state['Rotate First Leg Y'],
+                state['Rotate First Leg Z'] 
               ];
-              mouse.legRotationVector = legRotationVector;
+              mouse.firstLegRotationVector = firstLegRotationVector;
+              render();
+
+            }
+          };
+          return result;
+        }, {}),
+
+        ...['Rotate Second Leg X', 'Rotate Second Leg Y', 'Rotate Second Leg Z'].reduce((result, name, i) => {
+          result[name] = {
+            value: secondLegRotationVector[i],
+            min: -45, max: 45, step: 0.000001,
+            onChange(v, state) {
+              secondLegRotationVector = [
+                state['Rotate Second Leg X'],
+                state['Rotate Second Leg Y'],
+                state['Rotate Second Leg Z']
+              ];
+              mouse.secondLegRotationVector = secondLegRotationVector;
+              render();
+
+            }
+          };
+          return result;
+        }, {}),
+
+        ...['Rotate Third Leg X', 'Rotate Third Leg Y', 'Rotate Third Leg Z'].reduce((result, name, i) => {
+          result[name] = {
+            value: thirdLegRotationVector[i],
+            min: -45, max: 45, step: 0.000001,
+            onChange(v, state) {
+              thirdLegRotationVector = [
+                state['Rotate Third Leg X'],
+                state['Rotate Third Leg Y'],
+                state['Rotate Third Leg Z']
+              ];
+              mouse.thirdLegRotationVector = thirdLegRotationVector;
+              render();
+
+            }
+          };
+          return result;
+        }, {}),
+
+        ...['Rotate Fourth Leg X', 'Rotate Fourth Leg Y', 'Rotate Fourth Leg Z'].reduce((result, name, i) => {
+          result[name] = {
+            value: fourthLegRotationVector[i],
+            min: -45, max: 45, step: 0.000001,
+            onChange(v, state) {
+              fourthLegRotationVector = [
+                state['Rotate Fourth Leg X'],
+                state['Rotate Fourth Leg Y'],
+                state['Rotate Fourth Leg Z']
+              ];
+              mouse.fourthLegRotationVector = fourthLegRotationVector;
               render();
 
             }

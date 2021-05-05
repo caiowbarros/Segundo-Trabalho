@@ -628,7 +628,7 @@ class MySphere extends Shape3d{
 
 class Mouse{
 
-  constructor(program,gl,hipRotVec,headRotVec,legRotVec){
+  constructor(program,gl,hipRotVec,headRotVec,firstLegRotVec,secondLegRotVec,thirdLegRotationVector,fourthLegRotationVector){
     this.program = program;
     this.gl = gl;
     this.cube = new MyCube(this.program,this.gl,undefined);
@@ -637,7 +637,10 @@ class Mouse{
     this.sphere2 = new MySphere(this.program,this.gl,1.0,4,4,new Color(0.0,0.0,0.5));
     this._hipRotationVector = hipRotVec;
     this._headRotationVector = headRotVec;
-    this._legRotationVector = legRotVec;
+    this._firstLegRotationVector = firstLegRotVec;
+    this._secondLegRotationVector = secondLegRotVec;
+    this._thirdLegRotationVector = thirdLegRotationVector;
+    this._fourthLegRotationVector = fourthLegRotationVector;
   }
 
   get hipRotationVector(){return this._hipRotationVector;}
@@ -648,9 +651,21 @@ class Mouse{
 
   set headRotationVector(hipRotVec){this._headRotationVector = hipRotVec;}
 
-  get legRotationVector(){return this._legRotationVector;}
+  get firstLegRotationVector(){return this._firstLegRotationVector;}
 
-  set legRotationVector(hipRotVec){this._legRotationVector = hipRotVec;}
+  set firstLegRotationVector(hipRotVec){this._firstLegRotationVector = hipRotVec;}
+
+  get secondLegRotationVector(){return this._secondLegRotationVector;}
+
+  set secondLegRotationVector(hipRotVec){this._secondLegRotationVector = hipRotVec;}
+
+  get thirdLegRotationVector(){return this._thirdLegRotationVector;}
+
+  set thirdLegRotationVector(hipRotVec){this._thirdLegRotationVector = hipRotVec;}
+
+  get fourthLegRotationVector(){return this._fourthLegRotationVector;}
+
+  set fourthLegRotationVector(hipRotVec){this._fourthLegRotationVector = hipRotVec;}
 
 
   drawHead(modelViewMatrix){
@@ -805,6 +820,9 @@ class Mouse{
       var tv = vec3.create();
       vec3.set(tv, -2.0, 0.0, 0.0);
       mat4.translate(modelViewMatrix,modelViewMatrix,tv);
+      mat4.rotateX(modelViewMatrix,modelViewMatrix, this._firstLegRotationVector[0] * Math.PI / 180);
+      mat4.rotateY(modelViewMatrix,modelViewMatrix, this._firstLegRotationVector[1] * Math.PI / 180);
+      mat4.rotateZ(modelViewMatrix,modelViewMatrix, this._firstLegRotationVector[2] * Math.PI / 180);
       var s = vec3.create();
       vec3.set(s,1.1,1.1,1.1);
       mat4.scale(modelViewMatrix,modelViewMatrix,s)
@@ -821,6 +839,9 @@ class Mouse{
       var tv = vec3.create();
       vec3.set(tv, 2.0, 0.0, 0.0);
       mat4.translate(modelViewMatrix,modelViewMatrix,tv);
+      mat4.rotateX(modelViewMatrix,modelViewMatrix, this._secondLegRotationVector[0] * Math.PI / 180);
+      mat4.rotateY(modelViewMatrix,modelViewMatrix, this._secondLegRotationVector[1] * Math.PI / 180);
+      mat4.rotateZ(modelViewMatrix,modelViewMatrix, this._secondLegRotationVector[2] * Math.PI / 180);
       var s = vec3.create();
       vec3.set(s,1.1,1.1,1.1);
       mat4.scale(modelViewMatrix,modelViewMatrix,s)
@@ -836,6 +857,9 @@ class Mouse{
       var tv = vec3.create();
       vec3.set(tv, -2.0, -0.25, 0.0);
       mat4.translate(modelViewMatrix,modelViewMatrix,tv);
+      mat4.rotateX(modelViewMatrix,modelViewMatrix, this._thirdLegRotationVector[0] * Math.PI / 180);
+      mat4.rotateY(modelViewMatrix,modelViewMatrix, this._thirdLegRotationVector[1] * Math.PI / 180);
+      mat4.rotateZ(modelViewMatrix,modelViewMatrix, this._thirdLegRotationVector[2] * Math.PI / 180);
       setProgramMatrices(this.program,modelViewMatrix);
       modelViewMatrix = this.drawLeg(modelViewMatrix);
     modelViewMatrix = myMatrixStack.pop(); 
@@ -848,6 +872,9 @@ class Mouse{
       var tv = vec3.create();
       vec3.set(tv, 2.0, -0.25, 0.0);
       mat4.translate(modelViewMatrix,modelViewMatrix,tv);
+      mat4.rotateX(modelViewMatrix,modelViewMatrix, this._fourthLegRotationVector[0] * Math.PI / 180);
+      mat4.rotateY(modelViewMatrix,modelViewMatrix, this._fourthLegRotationVector[1] * Math.PI / 180);
+      mat4.rotateZ(modelViewMatrix,modelViewMatrix, this._fourthLegRotationVector[2] * Math.PI / 180);
       setProgramMatrices(this.program,modelViewMatrix);
       modelViewMatrix = this.drawLeg(modelViewMatrix);
     modelViewMatrix = myMatrixStack.pop(); 
